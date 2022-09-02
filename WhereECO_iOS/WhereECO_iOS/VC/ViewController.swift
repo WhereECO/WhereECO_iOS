@@ -87,7 +87,7 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor.mainGreen
         print("Where ECO?")
         
-//        self.navigationController!.isNavigationBarHidden = true
+        self.navigationController!.isNavigationBarHidden = true
         self.view?.safeAreaLayoutGuide.owningView?.backgroundColor = .mainGreen
         
 
