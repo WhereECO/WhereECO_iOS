@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         let mainText = UILabel()
         mainText.textColor = .darkBrown
         mainText.backgroundColor = .mainGreen
-        mainText.font = UIFont(name: "NotoSansKR-Bold", size: 20)
+//        mainText.font = UIFont(name: "NanumGothic", size: 20)
         mainText.font = UIFont.systemFont(ofSize: 30)
         mainText.text = "Where ECO?"
         mainText.sizeToFit()
@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         mainidText.backgroundColor = .white
         mainidText.placeholder = "아이디"
         mainidText.layer.cornerRadius = 5
+//        mainidText.font = UIFont(name: "NanumGothic", size: 10)
 //        mainidText.layer.borderWidth = 1
 //        mainidText.layer.borderColor = UIColor.darkBrown?.cgColor
         mainidText.borderStyle = .roundedRect
