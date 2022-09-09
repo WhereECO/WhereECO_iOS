@@ -268,7 +268,7 @@ extension MapVC: UITableViewDelegate, CLLocationManagerDelegate {
 }
 
 // MARK: extension LinkViewController
-extension LinkVC: UITableViewDelegate, UITableViewDataSource {
+extension LinkVC: UITableViewDelegate, UICollectionViewDataSource {
     
     @objc func backAction(sender: UITapGestureRecognizer) {
         self.navigationController?.popViewController(animated: true)
@@ -292,26 +292,75 @@ extension LinkVC: UITableViewDelegate, UITableViewDataSource {
         checkBtn3.tintColor = .red
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(items[indexPath.row])
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print(items[indexPath.row])
+//    }
+//
+//    func tableView(_ tableView: UITableView,
+//                   numberOfRowsInSection section: Int) -> Int {
+//        return self.items.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell")! as UITableViewCell
+//        cell.textLabel?.text = items[indexPath.row]
+//        cell.clipsToBounds = true
+//        cell.layer.cornerRadius = 5
+//        cell.backgroundColor = .mainYellow
+//        cell.textLabel?.textColor = .darkBrown
+//        let selectedColor = UIView()
+//        selectedColor.backgroundColor = .mainGreen
+//        cell.selectedBackgroundView = selectedColor
+//        return cell
+//    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+      self.dataSource.count
     }
     
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+      switch self.dataSource[section] {
+      case let .concept(concepts):
+        return concepts.count
+      case let .music(musics):
+        return musics.count
+      }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell")! as UITableViewCell
-        cell.textLabel?.text = items[indexPath.row]
-        cell.clipsToBounds = true
-        cell.layer.cornerRadius = 5
-        cell.backgroundColor = .mainYellow
-        cell.textLabel?.textColor = .darkBrown
-        let selectedColor = UIView()
-        selectedColor.backgroundColor = .mainGreen
-        cell.selectedBackgroundView = selectedColor
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+      switch self.dataSource[indexPath.section] {
+      case let .concept(concepts):
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ConceptCell", for: indexPath) as! ConceptCell
+        let item = concepts[indexPath.item]
+        cell.prepare(image: item.image, titleText: item.title, descText: item.desc)
         return cell
+      case let .music(musics):
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MusicCell", for: indexPath) as! MusicCell
+        let item = musics[indexPath.item]
+        cell.prepare(image: item.image, titleText: item.title, descText: item.desc)
+        return cell
+      }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+      switch kind {
+      case UICollectionView.elementKindSectionHeader:
+        let header = collectionView.dequeueReusableSupplementaryView(
+          ofKind: UICollectionView.elementKindSectionHeader,
+          withReuseIdentifier: "TitleHeaderView",
+          for: indexPath
+        ) as! youtubeView
+        header.prepare(image: UIImage(named: "thumbnail"), descText: "desc 텍스트", titleText: "title 텍스트")
+        return header
+      case UICollectionView.elementKindSectionFooter:
+        return collectionView.dequeueReusableSupplementaryView(
+          ofKind: UICollectionView.elementKindSectionFooter,
+          withReuseIdentifier: "FooterView",
+          for: indexPath
+        )
+      default:
+        return UICollectionReusableView()
+      }
     }
 }
 

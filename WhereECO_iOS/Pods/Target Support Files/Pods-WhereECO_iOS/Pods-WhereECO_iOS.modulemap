@@ -1,0 +1,6 @@
+framework module Pods_WhereECO_iOS {
+  umbrella header "Pods-WhereECO_iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
