@@ -269,7 +269,7 @@ extension MapVC: UITableViewDelegate, CLLocationManagerDelegate {
 
 // MARK: extension LinkViewController
 extension LinkVC: UITableViewDelegate, UICollectionViewDataSource {
-    
+
     @objc func backAction(sender: UITapGestureRecognizer) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -324,21 +324,6 @@ extension LinkVC: UITableViewDelegate, UICollectionViewDataSource {
         return concepts.count
       case let .music(musics):
         return musics.count
-      }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-      switch self.dataSource[indexPath.section] {
-      case let .concept(concepts):
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ConceptCell", for: indexPath) as! ConceptCell
-        let item = concepts[indexPath.item]
-        cell.prepare(image: item.image, titleText: item.title, descText: item.desc)
-        return cell
-      case let .music(musics):
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MusicCell", for: indexPath) as! MusicCell
-        let item = musics[indexPath.item]
-        cell.prepare(image: item.image, titleText: item.title, descText: item.desc)
-        return cell
       }
     }
     

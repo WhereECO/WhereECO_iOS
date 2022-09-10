@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-enum MusicSection {
+enum youtubeSection {
   struct Concept {
     let image: UIImage
     let title: String

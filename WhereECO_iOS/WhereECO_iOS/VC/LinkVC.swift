@@ -117,6 +117,10 @@ class LinkVC: UIViewController {
     
     let items: [String] = ["1", "2", "3"]
     
+    private var collectionView: UICollectionView?
+    private var dataSource = youtubeSection.dataSource
+    
+    
     lazy var tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = .mainYellow
@@ -131,9 +135,6 @@ class LinkVC: UIViewController {
         return table
     }()
     
-    private var collectionView: UICollectionView?
-    private var dataSource = Mock.dataSource
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -146,8 +147,6 @@ class LinkVC: UIViewController {
                 switch self.dataSource[section] {
                 case .concept:
                   return self.getLayoutConceptSection()
-                case .music:
-                  return self.getLayoutMusicSection()
                 }
               }
             ).then {
@@ -157,10 +156,7 @@ class LinkVC: UIViewController {
               $0.contentInset = .zero
               $0.backgroundColor = .clear
               $0.clipsToBounds = true
-              $0.register(ConceptCell.self, forCellWithReuseIdentifier: "ConceptCell")
-              $0.register(MusicCell.self, forCellWithReuseIdentifier: "MusicCell")
-              $0.register(TitleHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "TitleHeaderView")
-              $0.register(FooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterView")
+              $0.register(youtubeView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "youtubeView")
               $0.dataSource = self
               self.collectionView = $0
             }
