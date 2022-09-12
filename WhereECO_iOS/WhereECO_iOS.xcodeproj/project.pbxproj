@@ -19,8 +19,7 @@
 		2AB98D8828C03C6F00A9C07C /* extensionFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8728C03C6F00A9C07C /* extensionFile.swift */; };
 		2AB98D8B28C0415E00A9C07C /* DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8A28C0415E00A9C07C /* DTO.swift */; };
 		2AB98D8D28C1972300A9C07C /* ReatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8C28C1972300A9C07C /* ReatAPI.swift */; };
-		2AF5F66028C9B7A50052D4A7 /* youtubeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF5F65F28C9B7A50052D4A7 /* youtubeSection.swift */; };
-		2AF5F66228C9B7F90052D4A7 /* youtubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF5F66128C9B7F90052D4A7 /* youtubeView.swift */; };
+		2AF5F66628CEEBC80052D4A7 /* youtubeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF5F66528CEEBC80052D4A7 /* youtubeCell.swift */; };
 		7956440FCDFECBEF8432F37F /* Pods_WhereECO_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA2A8AD83D4B0731489FD26 /* Pods_WhereECO_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,8 +38,7 @@
 		2AB98D8728C03C6F00A9C07C /* extensionFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionFile.swift; sourceTree = "<group>"; };
 		2AB98D8A28C0415E00A9C07C /* DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTO.swift; sourceTree = "<group>"; };
 		2AB98D8C28C1972300A9C07C /* ReatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReatAPI.swift; sourceTree = "<group>"; };
-		2AF5F65F28C9B7A50052D4A7 /* youtubeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = youtubeSection.swift; sourceTree = "<group>"; };
-		2AF5F66128C9B7F90052D4A7 /* youtubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = youtubeView.swift; sourceTree = "<group>"; };
+		2AF5F66528CEEBC80052D4A7 /* youtubeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = youtubeCell.swift; sourceTree = "<group>"; };
 		3EB6BB91B3490BF51F624764 /* Pods-WhereECO_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereECO_iOS.debug.xcconfig"; path = "Target Support Files/Pods-WhereECO_iOS/Pods-WhereECO_iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B15FD430A5367DEE3DCA47B0 /* Pods-WhereECO_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereECO_iOS.release.xcconfig"; path = "Target Support Files/Pods-WhereECO_iOS/Pods-WhereECO_iOS.release.xcconfig"; sourceTree = "<group>"; };
 		CCA2A8AD83D4B0731489FD26 /* Pods_WhereECO_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhereECO_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,8 +114,7 @@
 		2AF5F65E28C9B7780052D4A7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2AF5F65F28C9B7A50052D4A7 /* youtubeSection.swift */,
-				2AF5F66128C9B7F90052D4A7 /* youtubeView.swift */,
+				2AF5F66528CEEBC80052D4A7 /* youtubeCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -136,7 +133,6 @@
 				3EB6BB91B3490BF51F624764 /* Pods-WhereECO_iOS.debug.xcconfig */,
 				B15FD430A5367DEE3DCA47B0 /* Pods-WhereECO_iOS.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -260,12 +256,11 @@
 				2AB98D8628C03AF600A9C07C /* LinkVC.swift in Sources */,
 				2AB98D8B28C0415E00A9C07C /* DTO.swift in Sources */,
 				2AB98D8828C03C6F00A9C07C /* extensionFile.swift in Sources */,
-				2AF5F66028C9B7A50052D4A7 /* youtubeSection.swift in Sources */,
+				2AF5F66628CEEBC80052D4A7 /* youtubeCell.swift in Sources */,
 				2AB98D8D28C1972300A9C07C /* ReatAPI.swift in Sources */,
 				2AB98D7128BF2B3F00A9C07C /* ViewController.swift in Sources */,
 				2AB98D6D28BF2B3F00A9C07C /* AppDelegate.swift in Sources */,
 				2AB98D6F28BF2B3F00A9C07C /* SceneDelegate.swift in Sources */,
-				2AF5F66228C9B7F90052D4A7 /* youtubeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

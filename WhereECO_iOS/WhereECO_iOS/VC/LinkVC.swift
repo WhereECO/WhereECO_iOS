@@ -11,6 +11,7 @@ import Then
 
 class LinkVC: UIViewController {
     
+    
     var titleView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainYellow
@@ -115,51 +116,12 @@ class LinkVC: UIViewController {
         return plusUrlText
     }()
     
-    let items: [String] = ["1", "2", "3"]
-    
-    private var collectionView: UICollectionView?
-    private var dataSource = youtubeSection.dataSource
-    
-    
-    lazy var tableView: UITableView = {
-        let table = UITableView()
-        table.backgroundColor = .mainYellow
-        table.tintColor = .darkBrown
-        table.clipsToBounds = true
-        table.layer.cornerRadius = 5
-        table.layer.borderColor = UIColor.darkBrown?.cgColor
-        table.layer.borderWidth = 1
-        table.dataSource = self
-        table.delegate = self
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
-        return table
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         label.text = "실천해요!"
         label.textColor = .darkBrown
-        
-        let collectionView = UICollectionView(
-              frame: .zero,
-              collectionViewLayout: UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
-                switch self.dataSource[section] {
-                case .concept:
-                  return self.getLayoutConceptSection()
-                }
-              }
-            ).then {
-              $0.isScrollEnabled = true
-              $0.showsHorizontalScrollIndicator = false
-              $0.showsVerticalScrollIndicator = true
-              $0.contentInset = .zero
-              $0.backgroundColor = .clear
-              $0.clipsToBounds = true
-              $0.register(youtubeView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "youtubeView")
-              $0.dataSource = self
-              self.collectionView = $0
-            }
         
         self.view.backgroundColor = .mainGreen
         
@@ -175,8 +137,7 @@ class LinkVC: UIViewController {
         self.view.addSubview(toDoLabel3)
         self.view.addSubview(checkBtn3)
         self.view.addSubview(plusUrlLabel)
-        self.view.addSubview(tableView)
-        self.view.addSubview(collectionView)
+        
         
         titleView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -259,62 +220,7 @@ class LinkVC: UIViewController {
             plusUrlLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
             
         ])
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            tableView.topAnchor.constraint(equalTo: self.plusUrlLabel.bottomAnchor, constant: 30),
-//            tableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-//            tableView.heightAnchor.constraint(equalToConstant: 300),
-//            tableView.widthAnchor.constraint(equalToConstant: 350)
-//        ])
-        
-        
-    }
-    
-    // Youtube
-    
-    private func getLayoutConceptSection() -> NSCollectionLayoutSection {
-      // item
-      let itemSize = NSCollectionLayoutSize(
-        widthDimension: .fractionalWidth(0.5),
-        heightDimension: .fractionalHeight(1.0)
-      )
-      let item = NSCollectionLayoutItem(layoutSize: itemSize)
-      item.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 8)
-      
-      // group
-      let groupSize = NSCollectionLayoutSize(
-        widthDimension: .fractionalWidth(0.9),
-        heightDimension: .fractionalHeight(0.3)
-      )
-      let group = NSCollectionLayoutGroup.horizontal(
-        layoutSize: groupSize,
-        subitems: [item]
-      )
-      
-      let headerSize = NSCollectionLayoutSize(
-        widthDimension: .fractionalWidth(1.0),
-        heightDimension: .absolute(40)
-      )
-      let header = NSCollectionLayoutBoundarySupplementaryItem(
-        layoutSize: headerSize,
-        elementKind: UICollectionView.elementKindSectionHeader,
-        alignment: .top
-      )
-      
-      let footerSize = NSCollectionLayoutSize(
-        widthDimension: .fractionalWidth(1.0),
-        heightDimension: .estimated(11)
-      )
-      let footer = NSCollectionLayoutBoundarySupplementaryItem(
-        layoutSize: footerSize,
-        elementKind: UICollectionView.elementKindSectionFooter,
-        alignment: .bottom
-      )
 
-      // section
-      let section = NSCollectionLayoutSection(group: group)
-      section.orthogonalScrollingBehavior = .continuous
-      section.boundarySupplementaryItems = [header, footer]
-      return section
     }
+    
 }
