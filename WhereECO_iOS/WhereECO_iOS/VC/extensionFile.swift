@@ -275,7 +275,6 @@ extension LinkVC: UITableViewDelegate {
     }
     
     @objc func logOutAction(sender: UITapGestureRecognizer) {
-        //        let vc = ViewController()
         // 값을 없애는 작업 필요
         self.navigationController?.popToRootViewController(animated: true)
     }
@@ -292,6 +291,28 @@ extension LinkVC: UITableViewDelegate {
         checkBtn3.tintColor = .red
     }
 }
+
+//extension LinkVC: UICollectionViewDelegate, UICollectionViewDataSource {
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return dataSource.count
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: youtubeCell.id, for: indexPath)
+//        if let cell = cell as? youtubeCell {
+//            cell.model = dataSource[indexPath.item]
+//        }
+//
+//        return cell
+//    }
+//}
+//
+//extension LinkVC: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 350, height: collectionView.frame.height) // point
+//    }
+//}
 
 //MARK: PaddingLabel
 class PaddingLabel: UILabel {

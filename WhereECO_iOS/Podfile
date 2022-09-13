@@ -8,6 +8,7 @@ target 'WhereECO_iOS' do
   # Pods for WhereECO_iOS
   pod 'SnapKit', '~> 5.6.0'
   # Pods for WhereECO-iOS
-  pod 'Then'
+  
+  pod "youtube-ios-player-helper"
 
 end
