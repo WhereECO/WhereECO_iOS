@@ -7,10 +7,10 @@
 
 import UIKit
 import SnapKit
-import youtube_ios_player_helper
+import YoutubePlayer_in_WKWebView
 
-class LinkVC: UIViewController, YTPlayerViewDelegate {
-
+class LinkVC: UIViewController {
+    
     var titleView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainYellow
@@ -127,9 +127,11 @@ class LinkVC: UIViewController, YTPlayerViewDelegate {
 //        return view
 //    }()
 
-    lazy var youtubeView: YTPlayerView = {
-        let youtubeView = YTPlayerView()
-
+    // Youtube Player Variable
+    let playVarsDic = ["playsinline": 1]
+    lazy var youtubeView: WKYTPlayerView = {
+        let youtubeView = WKYTPlayerView()
+        
         return youtubeView
     }()
     
@@ -154,12 +156,9 @@ class LinkVC: UIViewController, YTPlayerViewDelegate {
         self.view.addSubview(checkBtn3)
         self.view.addSubview(plusUrlLabel)
 //        self.view.addSubview(collectionView)
+        self.view.addSubview(youtubeView)
         
-        let otherPlayer = YTPlayerView()
-        self.view.addSubview(otherPlayer)
-        
-//        youtubeView.delegate = self
-        youtubeView.load(withVideoId: "CeK2MsJz1aA", playerVars: ["playsinline" : 1])
+        youtubeViewDidBecomeReady(youtubeView)
         
 //        setupDataSource()
 //        setupDelegate()
@@ -250,14 +249,15 @@ class LinkVC: UIViewController, YTPlayerViewDelegate {
         youtubeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             youtubeView.topAnchor.constraint(equalTo: self.plusUrlLabel.bottomAnchor, constant: 30),
-            youtubeView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-            
+            youtubeView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            youtubeView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+            youtubeView.heightAnchor.constraint(equalToConstant: 200)
         ])
         
     }
     
-    func youtubeViewDidBecomeReady(_ youtubeView: YTPlayerView){
-        youtubeView.playVideo()
+    func youtubeViewDidBecomeReady(_ youtubeView: WKYTPlayerView){
+        youtubeView.load(withVideoId: "NcSUweIWMTc", playerVars: playVarsDic)
     }
     
 //    private func setupDataSource() {

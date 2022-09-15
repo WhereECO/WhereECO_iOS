@@ -9,6 +9,5 @@ target 'WhereECO_iOS' do
   pod 'SnapKit', '~> 5.6.0'
   # Pods for WhereECO-iOS
   
-  pod "youtube-ios-player-helper"
-
+  pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
 end

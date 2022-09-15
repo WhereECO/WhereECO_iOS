@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import youtube_ios_player_helper
 
 class youtubeCell: UICollectionViewCell {
     
@@ -21,15 +20,15 @@ class youtubeCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var playerView: YTPlayerView = {
-        let playerView = YTPlayerView()
-        playerView.load(withVideoId: "NcSUweIWMTc", playerVars: ["playsinline" : 1])
-        return playerView
-    }()
-    
-    func playerViewDidBecomeReady(playerView: YTPlayerView) {
-        playerView.playVideo()
-    }
+//    lazy var playerView: YTPlayerView = {
+//        let playerView = YTPlayerView()
+//        playerView.load(withVideoId: "NcSUweIWMTc", playerVars: ["playsinline" : 1])
+//        return playerView
+//    }()
+//    
+//    func playerViewDidBecomeReady(playerView: YTPlayerView) {
+//        playerView.playVideo()
+//    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
