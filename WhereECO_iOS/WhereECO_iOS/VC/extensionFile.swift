@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import YoutubePlayer_in_WKWebView
 
 // MARK: extension UIColor
 extension UIColor {
@@ -292,27 +293,28 @@ extension LinkVC: UITableViewDelegate {
     }
 }
 
-//extension LinkVC: UICollectionViewDelegate, UICollectionViewDataSource {
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return dataSource.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: youtubeCell.id, for: indexPath)
-//        if let cell = cell as? youtubeCell {
-//            cell.model = dataSource[indexPath.item]
-//        }
-//
-//        return cell
-//    }
-//}
-//
-//extension LinkVC: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 350, height: collectionView.frame.height) // point
-//    }
-//}
+extension LinkVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: youtubeCell.id, for: indexPath)
+//        let myCellyoutube = WKYTPlayerView().load(withVideoId: dataSource[indexPath.item], playerVars: playVarsDic)
+        if let cell = cell as? youtubeCell {
+            cell.model = dataSource[indexPath.item]
+        }
+
+        return cell
+    }
+}
+
+extension LinkVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 350, height: collectionView.frame.height) // point
+    }
+}
 
 //MARK: PaddingLabel
 class PaddingLabel: UILabel {

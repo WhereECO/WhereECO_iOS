@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import YoutubePlayer_in_WKWebView
 
 class youtubeCell: UICollectionViewCell {
     
@@ -14,48 +15,53 @@ class youtubeCell: UICollectionViewCell {
 
     var model: String? { didSet { bind() } }
 
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-
-        return label
-    }()
-    
-//    lazy var playerView: YTPlayerView = {
-//        let playerView = YTPlayerView()
-//        playerView.load(withVideoId: "NcSUweIWMTc", playerVars: ["playsinline" : 1])
-//        return playerView
+//    lazy var titleLabel: UILabel = {
+//        let label = UILabel()
+//
+//        return label
 //    }()
-//    
-//    func playerViewDidBecomeReady(playerView: YTPlayerView) {
-//        playerView.playVideo()
-//    }
+    
+    // Youtube Player Variable
+    let playVarsDic = ["playsinline": 1]
+    lazy var youtubeView: WKYTPlayerView = {
+        let youtubeView = WKYTPlayerView()
+        
+        return youtubeView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         addSubviews()
         configure()
+        youtubeViewDidBecomeReady(youtubeView)
     }
 
+    func youtubeViewDidBecomeReady(_ youtubeView: WKYTPlayerView){
+        youtubeView.load(withVideoId: model, playerVars: playVarsDic)
+    }
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError()
     }
 
     private func addSubviews() {
-        addSubview(titleLabel)
+//        addSubview(titleLabel)
+        addSubview(youtubeView)
     }
 
     private func configure() {
-        titleLabel.snp.makeConstraints { make in
+        youtubeView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
         backgroundColor = .placeholderText
     }
 
     private func bind() {
-        titleLabel.text = model
-//        playerView = model
+//        titleLabel.text = model
+        youtubeView.load(withVideoId: model!, playerVars: playVarsDic)
+        
     }
     
 }
