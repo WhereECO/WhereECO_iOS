@@ -38,7 +38,7 @@ class youtubeCell: UICollectionViewCell {
     }
 
     func youtubeViewDidBecomeReady(_ youtubeView: WKYTPlayerView){
-        youtubeView.load(withVideoId: model, playerVars: playVarsDic)
+//        youtubeView.load(withVideoId: model, playerVars: playVarsDic)
     }
     
     @available(*, unavailable)
