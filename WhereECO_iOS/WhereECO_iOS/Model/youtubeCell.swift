@@ -61,7 +61,6 @@ class youtubeCell: UICollectionViewCell {
     private func bind() {
 //        titleLabel.text = model
         youtubeView.load(withVideoId: model!, playerVars: playVarsDic)
-        
     }
     
 }
