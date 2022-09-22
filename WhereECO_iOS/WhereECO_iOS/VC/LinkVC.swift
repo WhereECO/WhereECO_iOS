@@ -291,8 +291,8 @@ class LinkVC: UIViewController {
     private func configure() {
         collectionView.snp.makeConstraints { make in
 //            make.center.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.top.equalTo(500)
-            make.center.leading.trailing.equalToSuperview()
             make.height.equalTo(300)
         }
     }

@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 import YoutubePlayer_in_WKWebView
 
 // MARK: extension UIColor
@@ -301,9 +302,14 @@ extension LinkVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: youtubeCell.id, for: indexPath)
-//        let myCellyoutube = WKYTPlayerView().load(withVideoId: dataSource[indexPath.item], playerVars: playVarsDic)
         if let cell = cell as? youtubeCell {
-            cell.model = dataSource[indexPath.item]
+            
+            let youtubeView = WKYTPlayerView()
+            cell.addSubview(youtubeView)
+            youtubeView.snp.makeConstraints {
+                $0.leading.trailing.top.bottom.equalTo(0)
+            }
+            cell.youtubeViewDidBecomeReady(youtubeView, id: dataSource[indexPath.row])
         }
 
         return cell

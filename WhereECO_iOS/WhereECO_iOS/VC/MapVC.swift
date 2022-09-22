@@ -5,9 +5,9 @@
 //  Created by 김하은 on 2022/09/01.
 //
 
-import Foundation
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapVC: UIViewController {
 
@@ -64,9 +64,13 @@ class MapVC: UIViewController {
         retryBtn.addTarget(self, action: #selector(linkPageBtnPressed), for: .touchUpInside)
         return retryBtn
     }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getLocationUsagePermission()        // 권한을 요청하기 위한 창
+        self.mapView.showsUserLocation = true   // 사용자 위치를 나타낸 것을 보여준다.
         
         label.text = "찾아봐요!"
         label.textColor = .darkBrown
@@ -128,5 +132,5 @@ class MapVC: UIViewController {
         
     }
 
-
 }
+
