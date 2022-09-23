@@ -10,15 +10,21 @@ import UIKit
 class ViewController: UIViewController {
     
     // Where ECO
-    lazy var mainText: UILabel = {
-        let mainText = UILabel()
-        mainText.textColor = .darkBrown
-        mainText.backgroundColor = .mainGreen
-//        mainText.font = UIFont(name: "NanumGothic", size: 20)
-        mainText.font = UIFont.systemFont(ofSize: 30)
-        mainText.text = "Where ECO?"
-        mainText.sizeToFit()
-        return mainText
+//    lazy var mainText: UILabel = {
+//        let mainText = UILabel()
+//        mainText.textColor = .darkBrown
+//        mainText.backgroundColor = .mainGreen
+////        mainText.font = UIFont(name: "NanumGothic", size: 20)
+//        mainText.font = UIFont.systemFont(ofSize: 30)
+//        mainText.text = "Where ECO?"
+//        mainText.sizeToFit()
+//        return mainText
+//    }()
+    
+    lazy var logoimage: UIImageView = {
+        let logoimage = UIImageView()
+        logoimage.image = UIImage(named:"Logo")
+        return logoimage
     }()
     
     // 아이디 입력창
@@ -79,7 +85,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(self.mainText)
+//        self.view.addSubview(self.mainText)
+        self.view.addSubview(logoimage)
         self.view.addSubview(mainIdTextField)
         self.view.addSubview(mainPwdTextField)
         self.view.addSubview(signUpBtn)
@@ -99,17 +106,24 @@ class ViewController: UIViewController {
         signUpBtn.addTarget(self, action: #selector(signUpBtnPressed), for: .touchUpInside)
         
 
-        mainText.translatesAutoresizingMaskIntoConstraints = false
+//        mainText.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            mainText.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 250),
+//            mainText.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0)
+//        ])
+        logoimage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainText.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 250),
-            mainText.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0)
+            logoimage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+            logoimage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0),
+            logoimage.widthAnchor.constraint(equalToConstant: 300),
+            logoimage.heightAnchor.constraint(equalToConstant: 300)
         ])
         mainIdTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainIdTextField.topAnchor.constraint(equalTo: mainText.topAnchor, constant: 250),
+            mainIdTextField.topAnchor.constraint(equalTo: logoimage.bottomAnchor, constant: 100),
             mainIdTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0),
             mainIdTextField.widthAnchor.constraint(equalToConstant: 350),
-            mainIdTextField.heightAnchor.constraint(equalToConstant: 50),
+            mainIdTextField.heightAnchor.constraint(equalToConstant: 50)
         ])
         mainPwdTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
