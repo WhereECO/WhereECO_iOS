@@ -52,3 +52,28 @@ struct SignUpInfo: Codable {
         case id, pwd, checkpwd
     }
 }
+
+struct addressInfo: Codable {
+    /*
+     id: 아이디
+     latitude: 위도
+     longitude: 경도
+     addressName: 주소이름
+     placeName: 장소이름
+     */
+    init(id: Int = 0, latitude: Double = 0.0, longitude: Double = 0.0, addressName: String = "", placeName: String = "") {
+        self.id = id
+        self.latitude = latitude
+        self.longitude = longitude
+        self.addressName = addressName
+        self.placeName = placeName
+    }
+    
+    let id: Int
+    let latitude: Double
+    let longitude: Double
+    let addressName: String
+    let placeName: String
+}
+
+var addressData: [addressInfo] = []

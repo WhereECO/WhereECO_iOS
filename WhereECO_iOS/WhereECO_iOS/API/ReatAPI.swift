@@ -11,6 +11,33 @@ class RestAPI {
     let sync_que = DispatchQueue.global()
     let sync_group = DispatchGroup.init()
     
+    // 실시간 지도 정보 가져오기
+    func GET_Address(closure: @escaping ([addressInfo]) -> Void) {
+        
+        if let url = URL(string: "http://localhost:8088/addresses") {
+            var request = URLRequest.init(url: url)
+            
+            request.httpMethod = "GET"
+            print("json 받아오기 확인1")
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard let data = data else { return }
+                print("json 받아오기 확인2")
+                // get
+                let decoder = JSONDecoder()
+                print("json 받아오기 확인3")
+                
+                // decoder
+                let json = try!decoder.decode([addressInfo].self, from: data)
+                addressData = json
+                closure(json)
+                print("json 받아오기 확인4")
+                
+            }.resume()
+            print("json 받아오기 확인5")
+        }
+    }
+    
+    
     // 회원가입 정보 보내고 성공 여부 리턴하기
     func postSignUp(name: String, id: String, pwd: String, checkpwd: String) {
         let comment = SignUpInfo(name: name, id: id, pwd: pwd, checkpwd: checkpwd)
@@ -18,7 +45,7 @@ class RestAPI {
         else {return}
         
         // URL 객체 정의
-        let url = URL(string: "http://localhost:8080/auth/signup")
+        let url = URL(string: "http://localhost:8088/auth/signup")
         
         // URLRequest 객체를 정의
         var request = URLRequest(url: url!)
@@ -48,7 +75,7 @@ class RestAPI {
         else {return}
         
         // URL 객체 정의
-        let url = URL(string: "http://localhost:8080/auth/signin")
+        let url = URL(string: "http://localhost:8088/auth/signin")
         
         // URLRequest 객체를 정의
         var request = URLRequest(url: url!)
@@ -71,3 +98,4 @@ class RestAPI {
         task.resume()
     }
 }
+

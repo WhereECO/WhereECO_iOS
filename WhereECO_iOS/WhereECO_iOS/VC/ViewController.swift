@@ -9,18 +9,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    // Where ECO
-//    lazy var mainText: UILabel = {
-//        let mainText = UILabel()
-//        mainText.textColor = .darkBrown
-//        mainText.backgroundColor = .mainGreen
-////        mainText.font = UIFont(name: "NanumGothic", size: 20)
-//        mainText.font = UIFont.systemFont(ofSize: 30)
-//        mainText.text = "Where ECO?"
-//        mainText.sizeToFit()
-//        return mainText
-//    }()
-    
     lazy var logoimage: UIImageView = {
         let logoimage = UIImageView()
         logoimage.image = UIImage(named:"Logo")
@@ -105,12 +93,6 @@ class ViewController: UIViewController {
         loginBtn.addTarget(self, action: #selector(loginCheck), for: .touchUpInside)
         signUpBtn.addTarget(self, action: #selector(signUpBtnPressed), for: .touchUpInside)
         
-
-//        mainText.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            mainText.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 250),
-//            mainText.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0)
-//        ])
         logoimage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             logoimage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),

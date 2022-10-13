@@ -220,55 +220,6 @@ extension SignUpVC: UITableViewDelegate {
     }
 }
 
-// MARK: extension MapViewController
-extension MapVC: UITableViewDelegate, CLLocationManagerDelegate { 
-    @objc func linkPageBtnPressed() {
-        let vc = LinkVC()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    // 권한을 요청하는 함수
-    func getLocationUsagePermission() {
-        self.locationManager.requestWhenInUseAuthorization()    // 권한을 요청하는 것
-    }
-    
-    @objc func didClickMapView(sender: UITapGestureRecognizer) {
-        let location: CGPoint = sender.location(in: self.mapView)
-        let mapLocation: CLLocationCoordinate2D = self.mapView.convert(location, toCoordinateFrom: self.mapView)
-        
-        print("위도 : \(mapLocation.latitude), 경도 : \(mapLocation.longitude)")
-        
-    }
-    
-    // 클릭 재스처를 추가하기 위한 함수
-    func addGesture() {
-        let touch = UITapGestureRecognizer(target: self, action: #selector(didClickMapView(sender:)))
-        self.mapView.addGestureRecognizer(touch)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:   // 권한 동의를 누른 상태
-            print("GPS 권한 설정됨.")
-            DispatchQueue.main.async {
-                self.mapView.setUserTrackingMode(.follow, animated: true)   // 위치에 따라 화면이 바뀐다.
-            }
-        case .restricted, .notDetermined:               // 권한 동의 버튼 자체를 누르지 않은 상태
-            print("GPS 권한 설정되지 않음.")
-            DispatchQueue.main.async {                  // 권한 요청을 비동기로 보냄. (팝업으로 띄워야되기 때문이다. 만약 비동기를 사용하지 않으면 권한 설정이 될 때까지 작동하지 않음.)
-                self.getLocationUsagePermission()
-            }
-        case .denied:                                   // 권한 거부를 누른 상태
-            print("GPS 권한 요청 거부됨.")
-            DispatchQueue.main.async {
-                self.getLocationUsagePermission()
-            }
-        default:
-            print("GPS: Default")
-        }
-    }
-}
-
 // MARK: extension LinkViewController
 extension LinkVC: UITableViewDelegate {
     
@@ -299,7 +250,7 @@ extension LinkVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSource.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: youtubeCell.id, for: indexPath)
         if let cell = cell as? youtubeCell {
@@ -311,7 +262,7 @@ extension LinkVC: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             cell.youtubeViewDidBecomeReady(youtubeView, id: dataSource[indexPath.row])
         }
-
+        
         return cell
     }
 }
