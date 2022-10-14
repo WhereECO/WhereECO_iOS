@@ -7,23 +7,26 @@
 
 import Foundation
 
-struct LoginInfo: Codable {
+struct UserInfo: Codable {
     /*
      id: 아이디
      pwd: 패스워드
      */
     
-    init(id: String = "", pwd: String = "") {
+    init(id: String = "", pwd: String = "", token:String = "") {
         self.id = id
         self.pwd = pwd
+        self.token = token
     }
     
     var id: String
     var pwd: String
+    var token: String
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case pwd
+        case token
     }
 }
 
@@ -35,21 +38,21 @@ struct SignUpInfo: Codable {
      checkpwd: 패스워드 확인
      */
     
-    init(name: String = "", id: String = "", pwd: String = "", checkpwd: String = "") {
+    init(name: String = "", id: String = "", pwd: String = "", checkPwd: String = "") {
         self.name = name
         self.id = id
         self.pwd = pwd
-        self.checkpwd = checkpwd
+        self.checkPwd = checkPwd
     }
     
     var name: String
     var id: String
     var pwd: String
-    var checkpwd: String
+    var checkPwd: String
     
     enum CodingKeys: String, CodingKey {
         case name = "name"
-        case id, pwd, checkpwd
+        case id, pwd, checkPwd
     }
 }
 

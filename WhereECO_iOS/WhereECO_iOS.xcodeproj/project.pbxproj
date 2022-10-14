@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A0D745728F686E200EE5331 /* Maker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0D745628F686E200EE5331 /* Maker.swift */; };
+		2A0D74A128F9166A00EE5331 /* Pods_WhereECO_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA2A8AD83D4B0731489FD26 /* Pods_WhereECO_iOS.framework */; };
 		2AB98D6D28BF2B3F00A9C07C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D6C28BF2B3F00A9C07C /* AppDelegate.swift */; };
 		2AB98D6F28BF2B3F00A9C07C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D6E28BF2B3F00A9C07C /* SceneDelegate.swift */; };
 		2AB98D7128BF2B3F00A9C07C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D7028BF2B3F00A9C07C /* ViewController.swift */; };
@@ -19,9 +20,8 @@
 		2AB98D8628C03AF600A9C07C /* LinkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8528C03AF600A9C07C /* LinkVC.swift */; };
 		2AB98D8828C03C6F00A9C07C /* extensionFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8728C03C6F00A9C07C /* extensionFile.swift */; };
 		2AB98D8B28C0415E00A9C07C /* DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8A28C0415E00A9C07C /* DTO.swift */; };
-		2AB98D8D28C1972300A9C07C /* ReatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8C28C1972300A9C07C /* ReatAPI.swift */; };
+		2AB98D8D28C1972300A9C07C /* RestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB98D8C28C1972300A9C07C /* RestAPI.swift */; };
 		2AF5F66628CEEBC80052D4A7 /* youtubeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF5F66528CEEBC80052D4A7 /* youtubeCell.swift */; };
-		7956440FCDFECBEF8432F37F /* Pods_WhereECO_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA2A8AD83D4B0731489FD26 /* Pods_WhereECO_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,7 @@
 		2AB98D8528C03AF600A9C07C /* LinkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkVC.swift; sourceTree = "<group>"; };
 		2AB98D8728C03C6F00A9C07C /* extensionFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionFile.swift; sourceTree = "<group>"; };
 		2AB98D8A28C0415E00A9C07C /* DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTO.swift; sourceTree = "<group>"; };
-		2AB98D8C28C1972300A9C07C /* ReatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReatAPI.swift; sourceTree = "<group>"; };
+		2AB98D8C28C1972300A9C07C /* RestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestAPI.swift; sourceTree = "<group>"; };
 		2AF5F66528CEEBC80052D4A7 /* youtubeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = youtubeCell.swift; sourceTree = "<group>"; };
 		3EB6BB91B3490BF51F624764 /* Pods-WhereECO_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereECO_iOS.debug.xcconfig"; path = "Target Support Files/Pods-WhereECO_iOS/Pods-WhereECO_iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B15FD430A5367DEE3DCA47B0 /* Pods-WhereECO_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereECO_iOS.release.xcconfig"; path = "Target Support Files/Pods-WhereECO_iOS/Pods-WhereECO_iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7956440FCDFECBEF8432F37F /* Pods_WhereECO_iOS.framework in Frameworks */,
+				2A0D74A128F9166A00EE5331 /* Pods_WhereECO_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				2AB98D8A28C0415E00A9C07C /* DTO.swift */,
-				2AB98D8C28C1972300A9C07C /* ReatAPI.swift */,
+				2AB98D8C28C1972300A9C07C /* RestAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -260,7 +260,7 @@
 				2AB98D8B28C0415E00A9C07C /* DTO.swift in Sources */,
 				2AB98D8828C03C6F00A9C07C /* extensionFile.swift in Sources */,
 				2AF5F66628CEEBC80052D4A7 /* youtubeCell.swift in Sources */,
-				2AB98D8D28C1972300A9C07C /* ReatAPI.swift in Sources */,
+				2AB98D8D28C1972300A9C07C /* RestAPI.swift in Sources */,
 				2AB98D7128BF2B3F00A9C07C /* ViewController.swift in Sources */,
 				2A0D745728F686E200EE5331 /* Maker.swift in Sources */,
 				2AB98D6D28BF2B3F00A9C07C /* AppDelegate.swift in Sources */,
@@ -415,6 +415,8 @@
 				DEVELOPMENT_TEAM = JVBAL8CV7V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhereECO_iOS/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치를 받아오려 합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받아오려 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -445,6 +447,8 @@
 				DEVELOPMENT_TEAM = JVBAL8CV7V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhereECO_iOS/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치를 받아오려 합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받아오려 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

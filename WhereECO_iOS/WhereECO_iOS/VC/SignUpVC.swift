@@ -18,12 +18,14 @@ class SignUpVC: UIViewController {
     
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 80, height: 40))
     
+    let restApi = RestAPI()
+    var signMember = SignUpInfo()    // sign 관련 member
     
-    var userModel = SignUpInfo.init() // 인스턴스 생성
+//    var userModel = SignUpInfo.init() // 인스턴스 생성
     
     // 회원 확인 method
     func isUser(id: String) -> Bool {
-        for user in [userModel] {
+        for user in [signMember] {
             if user.id == id {
                 return true // 이미 회원인 경우
             }
@@ -38,36 +40,6 @@ class SignUpVC: UIViewController {
         guard let id = idTextField.text, !id.isEmpty else { return }
         guard let pwd = pwdTextField.text, !pwd.isEmpty else { return }
         guard let checkPwd = checkPwdTextField.text, !checkPwd.isEmpty else { return }
-        
-        //        if userModel(id: id){
-        //            if let removable = self.view.viewWithTag(100) {
-        //                removable.removeFromSuperview()
-        //            }
-        //        }
-        //        else {
-        //            shakeTextField(textField: nameTextField)
-        //            let emailLabel = UILabel(frame: CGRect(x: 68, y: 350, width: 279, height: 45))
-        //            emailLabel.text = "이름을 입력해주세요."
-        //            emailLabel.textColor = UIColor.red
-        //            emailLabel.tag = 100
-        //
-        //            self.view.addSubview(emailLabel)
-        //        }
-        //
-        //        if userModel(pwd: pwd){
-        //            if let removable = self.view.viewWithTag(101) {
-        //                removable.removeFromSuperview()
-        //            }
-        //        }
-        //        else{
-        //            shakeTextField(textField: pwdTextField)
-        //            let passwordLabel = UILabel(frame: CGRect(x: 68, y: 435, width: 279, height: 45))
-        //            passwordLabel.text = "비밀번호 형식을 확인해 주세요"
-        //            passwordLabel.textColor = UIColor.red
-        //            passwordLabel.tag = 101
-        //
-        //            self.view.addSubview(passwordLabel)
-        //        } // 비밀번호 형식 오류
         
         if pwd == checkPwd {
             if let removable = self.view.viewWithTag(102) {
@@ -84,7 +56,7 @@ class SignUpVC: UIViewController {
             self.view.addSubview(passwordConfirmLabel)
         }
         
-        if (userModel.name == nameTextField.text) && (userModel.id == idTextField.text) && (userModel.pwd == pwdTextField.text) && pwd == checkPwd {
+        if (signMember.name == nameTextField.text) && (signMember.id == idTextField.text) && (signMember.pwd == pwdTextField.text) && pwd == checkPwd {
             
             let joinFail: Bool = isUser(id: id)
             
@@ -102,6 +74,7 @@ class SignUpVC: UIViewController {
                 print("가입 성공")
                 if let removable = self.view.viewWithTag(103) {
                     removable.removeFromSuperview()
+                    restApi.POST_SignUp(name: nameTextField.text!, id: idTextField.text!, pwd: pwdTextField.text!, checkPwd: checkPwdTextField.text!)
                 }
                 self.performSegue(withIdentifier: "showMap", sender: self)
             }

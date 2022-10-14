@@ -8,17 +8,22 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Security
 
 class MapVC: UIViewController {
-
+    
     let restApi = RestAPI()
     private var member = [addressInfo].init()    // address 관련 member
+    private var loginMember = UserInfo()    // login 관련 member
     
     func update() {
         restApi.GET_Address(closure: { [self] datas in
             member = datas
             createMaker2()
         })
+        for i in member {
+            let userlocation = CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude)
+        }
     }
     
     var titleView: UIView = {
@@ -49,6 +54,17 @@ class MapVC: UIViewController {
         return searchLocation
     }()
     
+    // 검색하기 버튼
+    lazy var searchBtn: UIButton = {
+        let searchBtn = UIButton()
+        searchBtn.addTarget(self, action: #selector(searchBtnPressed), for: .touchUpInside)
+        searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        searchBtn.tintColor = .darkBrown
+        searchBtn.backgroundColor = .mainYellow
+        searchBtn.layer.cornerRadius = 5
+        return searchBtn
+    }()
+    
     // 지도 view
     lazy var mapView: MKMapView = {
         let map = MKMapView()
@@ -67,8 +83,11 @@ class MapVC: UIViewController {
     // 현위치로 돌아가는 버튼을 생성한다.
     lazy var locationBtn: UIButton = {
         let btn1 = UIButton()                    // 버튼 생성하기 위한 변수 생성
-        btn1.setImage(UIImage(systemName: "location.viewfinder"), for: .normal)
-        btn1.tintColor = .black
+        btn1.setTitle("내 위치로 이동하기", for: .normal)
+        btn1.backgroundColor = .mainYellow       // 버튼 색상
+        btn1.setTitleColor(.darkBrown, for: .normal) // 버튼 글씨 색상
+        btn1.layer.cornerRadius = 10
+        btn1.tintColor = .mainYellow
         btn1.addTarget(self, action: #selector(goUserPosition), for: .touchUpInside)   // 버튼이 경계 안에서 터치 됐을때 buttonAction이 작동한다.
         return btn1
     }()
@@ -78,21 +97,9 @@ class MapVC: UIViewController {
         print("현재 위치로 이동")           // 작동되는지 확인하기 위한 print문
         // 설정한 위치로 이동한다.
         self.mapView.setUserTrackingMode(.follow, animated: true)   // 위치에 따라 화면이 바뀐다.
-//        DispatchQueue.main.async - 지금은 비동기를 해 줄 필요가 없다.
+        //        DispatchQueue.main.async - 지금은 비동기를 해 줄 필요가 없다.
     }
-
-    // 현재 위치에서 찾기
-    lazy var retryBtn: UIButton = {
-        let retryBtn = UIButton()        // LinkPage 이동하기 위한 버튼
-        retryBtn.setTitle("현재 지도에서 찾기", for: .normal)
-        retryBtn.backgroundColor = .mainYellow       // 버튼 색상
-        retryBtn.setTitleColor(.darkBrown, for: .normal) // 버튼 글씨 색상
-        retryBtn.layer.cornerRadius = 10
-        retryBtn.tintColor = .mainYellow
-        retryBtn.addTarget(self, action: #selector(linkPageBtnPressed), for: .touchUpInside)
-        return retryBtn
-    }()
-
+    
     // 위치를 나타낼 함수
     func createMarker(title: String, subtitle: String, coordinate: CLLocationCoordinate2D) {
         let marker = Marker(title: title, subtitle: subtitle, coordinate: coordinate)
@@ -106,9 +113,6 @@ class MapVC: UIViewController {
             print("member 정보", i.placeName)
         }
     }
-    
-    // 검색하면 장소를 나타낼 함수
-    
     
     // 클릭 재스처를 추가하기 위한 함수
     func addGesture() {
@@ -140,8 +144,8 @@ class MapVC: UIViewController {
         self.view.addSubview(label)
         self.view.addSubview(linkPageBtn)
         self.view.addSubview(searchTextField)
+        self.view.addSubview(searchBtn)
         self.view.addSubview(mapView)
-        self.mapView.addSubview(retryBtn)
         self.mapView.addSubview(locationBtn)
         
         titleView.translatesAutoresizingMaskIntoConstraints = false
@@ -169,9 +173,17 @@ class MapVC: UIViewController {
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchTextField.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120),
-            searchTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            searchTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
             searchTextField.heightAnchor.constraint(equalToConstant: 30),
             searchTextField.widthAnchor.constraint(equalToConstant: 330)
+        ])
+        
+        searchBtn.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchBtn.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120),
+            searchBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
+            searchBtn.heightAnchor.constraint(equalToConstant: 30),
+            searchBtn.widthAnchor.constraint(equalToConstant: 30)
         ])
         
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -182,33 +194,73 @@ class MapVC: UIViewController {
             mapView.widthAnchor.constraint(equalToConstant: 350)
         ])
         
-        retryBtn.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            retryBtn.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
-            retryBtn.centerYAnchor.constraint(equalTo: self.mapView.centerYAnchor, constant: -285),
-            retryBtn.heightAnchor.constraint(equalToConstant: 25),
-            retryBtn.widthAnchor.constraint(equalToConstant: 150)
-        ])
         locationBtn.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            locationBtn.trailingAnchor.constraint(equalTo: self.mapView.trailingAnchor, constant: -1),
-            locationBtn.centerYAnchor.constraint(equalTo: self.mapView.centerYAnchor, constant: 260),
-            locationBtn.heightAnchor.constraint(equalToConstant: 80),
-            locationBtn.widthAnchor.constraint(equalToConstant: 80)
+            locationBtn.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
+            locationBtn.centerYAnchor.constraint(equalTo: self.mapView.centerYAnchor, constant: -285),
+            locationBtn.heightAnchor.constraint(equalToConstant: 25),
+            locationBtn.widthAnchor.constraint(equalToConstant: 150)
         ])
         
         update()
         addGesture()
         
     }
-
+    
+    //MARK: 해당 계정으로 패스워드를 키체인에서 가져오기
+    func readItemsOnKeyChain() {
+        let account = loginMember.id
+        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
+                                kSecAttrAccount: account,
+                           kSecReturnAttributes: true,
+                                 kSecReturnData: true]
+        var item: CFTypeRef?
+        if SecItemCopyMatching(query as CFDictionary, &item) != errSecSuccess {
+            print("read failed")
+            return
+        }
+        guard let existingItem = item as? [String: Any] else { return }
+        guard let data = existingItem["v_Data"] as? Data else { return }
+        guard let token = String(data: data, encoding: .utf8) else { return }
+        
+        print(token)
+    }
+    
 }
 
-// MARK: extension MapViewController
+// MARK: - extension MapViewController
 extension MapVC: UITableViewDelegate, CLLocationManagerDelegate {
     @objc func linkPageBtnPressed() {
+        readItemsOnKeyChain()
+        
+        //        restApi.POST_Token -> 토큰 post하기
+        print("keyChain에서 가져오기 성공!")
         let vc = LinkVC()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func searchBtnPressed() {
+        print("함수 실행1")
+        let place = searchTextField.text
+        for i in member {
+            if place == i.placeName {
+                goLocation(latitude: i.latitude, longitude: i.longitude, delta: 0.01)
+                print(i.placeName)
+                print("함수 실행2")
+            }
+        }
+    }
+    
+    
+    // 위도, 경도에 따른 주소 찾기
+    func goLocation(latitude latitudeValue: CLLocationDegrees, longitude longitudeValue : CLLocationDegrees, delta span :Double) {
+        print("...함수 실행...")
+        
+        let pLocation = CLLocationCoordinate2DMake(latitudeValue, longitudeValue)
+        let spanValue = MKCoordinateSpan(latitudeDelta: span, longitudeDelta: span)
+        let pRegion = MKCoordinateRegion(center: pLocation, span: spanValue)
+        
+        mapView.setRegion(pRegion, animated: true)
     }
     
     // 권한을 요청하는 함수
@@ -252,4 +304,3 @@ extension MapVC: UITableViewDelegate, CLLocationManagerDelegate {
         }
     }
 }
-

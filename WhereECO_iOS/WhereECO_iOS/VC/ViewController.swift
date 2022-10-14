@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import Security
+
+enum KeychainError: Error {
+    case unexpectedPasswordStatus
+    case duplicatePasswordKeyValue
+}
 
 class ViewController: UIViewController {
+    
+    let restApi = RestAPI()
+    var loginMember = UserInfo()    // login 관련 member
     
     lazy var logoimage: UIImageView = {
         let logoimage = UIImageView()
@@ -37,6 +46,7 @@ class ViewController: UIViewController {
         mainpwdText.backgroundColor = .white
         mainpwdText.placeholder = "비밀번호"
         mainpwdText.layer.cornerRadius = 5
+        mainpwdText.isSecureTextEntry = true
 //        mainpwdText.layer.borderWidth = 1
 //        mainpwdText.layer.borderColor = UIColor.darkBrown?.cgColor
         mainpwdText.borderStyle = .roundedRect
@@ -130,6 +140,50 @@ class ViewController: UIViewController {
         ])
     }
 
-
+    //MARK: 키체인에 넣을 아이템 생성
+    func addItemsOnKeyChain() throws {
+        //간단하게 네임이 younsu이고, 패스워드가 ask123인 유저의 패스워드를 keychain 형식으로 저장.
+        let credentials = UserInfo(id: loginMember.id, pwd: loginMember.pwd, token: loginMember.token)
+        let account = credentials.id
+        let token = credentials.token.data(using: String.Encoding.utf8)!
+        let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
+                                    kSecAttrAccount: account,
+                                    kSecValueData: token]
+        let status = SecItemAdd(query as CFDictionary, nil)
+        if status == errSecSuccess {
+            print("success")
+        } else if status == errSecDuplicateItem {
+            updateItemOnKeyChain(value: token, key: account)
+        } else {
+            print("add failed")
+            throw KeychainError.unexpectedPasswordStatus
+        }
+    }
+    
+    //MARK: 같은 키값이면 업데이트하기
+    func updateItemOnKeyChain(value: Any, key: Any) {
+        let previousQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
+                                              kSecAttrAccount: key]
+        let updateQuery: [CFString: Any] = [kSecValueData: value]
+        
+        let status = SecItemUpdate(previousQuery as CFDictionary, updateQuery as CFDictionary)
+        if status == errSecSuccess {
+            print("update complete")
+        } else {
+            print("not finished update")
+        }
+    }
+    
+    //MARK: 해당 string으로 이루어진 키데이터 쌍 삭제하기
+    func deleteItemOnKeyChain(key: String) {
+        let deleteQuery: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
+                                            kSecAttrAccount: key]
+        let status = SecItemDelete(deleteQuery as CFDictionary)
+        if status == errSecSuccess {
+            print("remove key-data complete")
+        } else {
+            print("remove key-data failed")
+        }
+    }
 }
 

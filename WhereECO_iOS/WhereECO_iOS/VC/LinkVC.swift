@@ -11,6 +11,9 @@ import YoutubePlayer_in_WKWebView
 
 class LinkVC: UIViewController {
     
+    let restApi = RestAPI()
+    var loginMember = UserInfo()    // login 관련 member
+    
     var titleView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainYellow
