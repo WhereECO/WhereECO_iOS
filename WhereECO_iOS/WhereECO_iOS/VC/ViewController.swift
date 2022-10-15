@@ -76,6 +76,7 @@ class ViewController: UIViewController {
         loginButton.layer.cornerRadius = 5
 //        loginButton.layer.borderWidth = 1
 //        loginButton.layer.borderColor = UIColor.darkBrown?.cgColor
+        loginButton.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         return loginButton
     }()
@@ -143,8 +144,8 @@ class ViewController: UIViewController {
     //MARK: 키체인에 넣을 아이템 생성
     func addItemsOnKeyChain() throws {
         //간단하게 네임이 younsu이고, 패스워드가 ask123인 유저의 패스워드를 keychain 형식으로 저장.
-        let credentials = UserInfo(id: loginMember.id, pwd: loginMember.pwd, token: loginMember.token)
-        let account = credentials.id
+        let credentials = UserInfo(userId: loginMember.userId, pwd: loginMember.pwd, token: loginMember.token)
+        let account = credentials.userId
         let token = credentials.token.data(using: String.Encoding.utf8)!
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                                     kSecAttrAccount: account,

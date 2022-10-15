@@ -88,8 +88,8 @@ class RestAPI {
     }
     
     // 로그인 정보 보내기
-    func POST_Login(id: String, pwd: String) {
-        let comment = UserInfo(id: id, pwd: pwd)
+    func POST_Login(userId: String, pwd: String) {
+        let comment = UserInfo(userId: userId, pwd: pwd)
         guard let uploadData = try? JSONEncoder().encode(comment)
         else {return}
         
@@ -133,11 +133,64 @@ class RestAPI {
                 let decoder = JSONDecoder()
                 
                 // decoder
-                let json = try!decoder.decode(UserInfo.self, from: data)
+                let json = try?decoder.decode(UserInfo.self, from: data)
+                closure(json!)
+                
+            }.resume()
+        }
+    }
+    
+    func POST_Token(userId: String, token: String) {
+    
+        let comment = TokenInfo(userId: userId, token: token)
+        guard let uploadData = try? JSONEncoder().encode(comment)
+        else {return}
+        
+        // URL 객체 정의
+        let url = URL(string: "http://localhost:8088/users/todo")
+        
+        // URLRequest 객체를 정의
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+
+        // insert json data to the request
+        request.httpBody = uploadData
+
+        // URLSession 객체를 통해 전송, 응답값 처리
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                // 서버가 응답이 없거나 통신이 실패
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            // 응답 처리 로직
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
+            }
+        }
+        task.resume()
+    }
+    
+    func GET_Todo(closure: @escaping (TodoInfo) -> Void) {
+        
+        if let url = URL(string: "http://localhost:8088/users/todo") {
+            var request = URLRequest.init(url: url)
+            
+            request.httpMethod = "GET"
+            
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard let data = data else { return }
+                // get
+                let decoder = JSONDecoder()
+                
+                // decoder
+                let json = try!decoder.decode(TodoInfo.self, from: data)
                 closure(json)
                 
             }.resume()
         }
+        
     }
 }
 

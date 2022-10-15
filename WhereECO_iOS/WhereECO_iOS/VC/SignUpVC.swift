@@ -35,6 +35,7 @@ class SignUpVC: UIViewController {
     
     
     @IBAction func didTapJoinButton(_ sender: Any) {
+        print("저장하기 버튼")
         // 옵셔널 바인딩 & 예외 처리 : Textfield가 빈문자열이 아니고, nil이 아닐 때
         guard let name = nameTextField.text, !name.isEmpty else { return }
         guard let id = idTextField.text, !id.isEmpty else { return }
@@ -74,7 +75,7 @@ class SignUpVC: UIViewController {
                 print("가입 성공")
                 if let removable = self.view.viewWithTag(103) {
                     removable.removeFromSuperview()
-                    restApi.POST_SignUp(name: nameTextField.text!, id: idTextField.text!, pwd: pwdTextField.text!, checkPwd: checkPwdTextField.text!)
+//                    restApi.POST_SignUp(name: nameTextField.text!, id: idTextField.text!, pwd: pwdTextField.text!, checkPwd: checkPwdTextField.text!)
                 }
                 self.performSegue(withIdentifier: "showMap", sender: self)
             }

@@ -13,21 +13,44 @@ struct UserInfo: Codable {
      pwd: 패스워드
      */
     
-    init(id: String = "", pwd: String = "", token:String = "") {
-        self.id = id
+    init(userId: String = "", pwd: String = "", token:String = "") {
+        self.userId = userId
         self.pwd = pwd
         self.token = token
     }
     
-    var id: String
+    var userId: String
     var pwd: String
     var token: String
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case pwd
-        case token
+        case userId = "userId"
+        case pwd = "pwd"
+        case token = "token"
     }
+}
+
+struct TokenInfo: Codable {
+    init(userId: String="", token: String="") {
+        self.userId = userId
+        self.token = token
+    }
+    
+    var userId: String
+    var token: String
+}
+
+struct TodoInfo: Codable {
+    init(userId: String = "", todo1: Bool = false, todo2: Bool = false, todo3: Bool = false) {
+        self.userId = userId
+        self.todo1 = todo1
+        self.todo2 = todo2
+        self.todo3 = todo3
+    }
+    var userId: String
+    var todo1: Bool
+    var todo2: Bool
+    var todo3: Bool
 }
 
 struct SignUpInfo: Codable {

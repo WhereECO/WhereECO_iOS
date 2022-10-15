@@ -44,18 +44,43 @@ extension ViewController: UITableViewDelegate {
         signUpVC.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
+    @objc func loginAction() {
+        print("로그인 버튼 클릭")
+        
+        restApi.POST_Login(userId: mainIdTextField.text!, pwd: mainPwdTextField.text!)
+            
+        if (loginMember.userId == mainIdTextField.text) && (loginMember.pwd == mainPwdTextField.text) {
+            print("로그인 성공")
+            do {
+                try addItemsOnKeyChain()
+                print("keyChain에 저장 성공!")
+                let mainVC = MapVC()
+                navigationController?.pushViewController(mainVC, animated: true)
+                mainVC.navigationController!.navigationBar.isTranslucent = false
+                mainVC.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+            } catch {
+                print("keyChain에 저장하지 못함.")
+            }
+
+        } else {
+            print("로그인 실패")
+            shakeTextField(textField: mainIdTextField)
+            shakeTextField(textField: mainPwdTextField)
+        }
+    }
     // 로그인 확인하기
     @objc func loginCheck() {
         print("로그인 버튼 클릭")
-        let mainVC = MapVC()
-        navigationController?.pushViewController(mainVC, animated: true)
-        mainVC.navigationController!.navigationBar.isTranslucent = false
-        mainVC.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+//        let mainVC = MapVC()
+//        navigationController?.pushViewController(mainVC, animated: true)
+//        mainVC.navigationController!.navigationBar.isTranslucent = false
+//        mainVC.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        
         // 옵셔널 바인딩 & 예외 처리 : Textfield가 빈문자열이 아니고, nil이 아닐 때
         guard let id = mainIdTextField.text, !id.isEmpty else { return }
         guard let pwd = mainPwdTextField.text, !pwd.isEmpty else { return }
 
-        if (loginMember.id == mainIdTextField.text) && (loginMember.pwd == mainPwdTextField.text) {
+        if (loginMember.userId == mainIdTextField.text) && (loginMember.pwd == mainPwdTextField.text) {
             print("로그인 성공")
             do {
                 try addItemsOnKeyChain()
@@ -153,7 +178,7 @@ extension SignUpVC: UITableViewDelegate {
         print("저장하기!")
         // 저장하기 Action
         validateForm()
-//        restApi.POST_SignUp(name: nameTextField.text, id: idTextField.text, pwd: pwdTextField.text, checkPwd: checkPwdTextField.text)
+        restApi.POST_SignUp(name: nameTextField.text!, id: idTextField.text!, pwd: pwdTextField.text!, checkPwd: checkPwdTextField.text!)
         navigationController?.popViewController(animated: true)
     }
     
