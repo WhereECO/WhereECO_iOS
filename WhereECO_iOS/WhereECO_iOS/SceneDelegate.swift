@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.backgroundColor = .systemBackground
         // TabBar & StatusBar color change
         window?.safeAreaLayoutGuide.owningView?.backgroundColor = .mainGreen
-        window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        window?.rootViewController = UINavigationController(rootViewController: MainVC())
         window?.makeKeyAndVisible()
     }
 

@@ -18,8 +18,8 @@ extension UIColor {
     class var mainYellow: UIColor? { return UIColor(named: "mainYellow")}
 }
 
-// MARK: extension ViewController
-extension ViewController: UITableViewDelegate {
+// MARK: extension MainVC
+extension MainVC: UITableViewDelegate {
     //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     //        let vc = ViewController()
     //        navigationController?.pushViewController(vc, animated: true)
@@ -46,60 +46,35 @@ extension ViewController: UITableViewDelegate {
     
     @objc func loginAction() {
         print("로그인 버튼 클릭")
-        
-        restApi.POST_Login(userId: mainIdTextField.text!, pwd: mainPwdTextField.text!)
+        restApi.POST_Login(userId: mainIdTextField.text!, pwd: mainPwdTextField.text!, closure: { [self] datas in
+            tokenMember = datas
             
-        if (loginMember.userId == mainIdTextField.text) && (loginMember.pwd == mainPwdTextField.text) {
-            print("로그인 성공")
-            do {
-                try addItemsOnKeyChain()
-                print("keyChain에 저장 성공!")
-                let mainVC = MapVC()
-                navigationController?.pushViewController(mainVC, animated: true)
-                mainVC.navigationController!.navigationBar.isTranslucent = false
-                mainVC.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
-            } catch {
-                print("keyChain에 저장하지 못함.")
-            }
+            if (tokenMember.grantType == "Bearer") {
+                print("로그인 성공")
+                do {
+                    try addItemsOnKeyChain()
+                    print("keyChain에 저장 성공!")
+                    nextView()
+                } catch {
+                    print("keyChain에 저장하지 못함.")
+                }
 
-        } else {
-            print("로그인 실패")
-            shakeTextField(textField: mainIdTextField)
-            shakeTextField(textField: mainPwdTextField)
-        }
+            } else {
+                print("로그인 실패")
+                shakeTextField(textField: mainIdTextField)
+                shakeTextField(textField: mainPwdTextField)
+            }
+        })
     }
-    // 로그인 확인하기
-    @objc func loginCheck() {
-        print("로그인 버튼 클릭")
-//        let mainVC = MapVC()
-//        navigationController?.pushViewController(mainVC, animated: true)
-//        mainVC.navigationController!.navigationBar.isTranslucent = false
-//        mainVC.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
-        
-        // 옵셔널 바인딩 & 예외 처리 : Textfield가 빈문자열이 아니고, nil이 아닐 때
-        guard let id = mainIdTextField.text, !id.isEmpty else { return }
-        guard let pwd = mainPwdTextField.text, !pwd.isEmpty else { return }
-
-        if (loginMember.userId == mainIdTextField.text) && (loginMember.pwd == mainPwdTextField.text) {
-            print("로그인 성공")
-            do {
-                try addItemsOnKeyChain()
-                print("keyChain에 저장 성공!")
-                let mainVC = MapVC()
-                navigationController?.pushViewController(mainVC, animated: true)
-                mainVC.navigationController!.navigationBar.isTranslucent = false
-                mainVC.navigationController!.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
-            } catch {
-                print("keyChain에 저장하지 못함.")
-            }
-
-        } else {
-            print("로그인 실패")
-            shakeTextField(textField: mainIdTextField)
-            shakeTextField(textField: mainPwdTextField)
+    
+    @objc func nextView() {
+        DispatchQueue.main.async {
+            print("mapView로 이동!")
+            let mainVC = MapVC()
+            self.navigationController?.pushViewController(mainVC, animated: true)
+            mainVC.navigationController?.navigationBar.isTranslucent = false
+            mainVC.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
         }
-
-
     }
     
     // TextField 흔들기 애니메이션
@@ -209,15 +184,21 @@ extension LinkVC: UITableViewDelegate {
     }
     
     @objc func checkAction1(sender: UITapGestureRecognizer) {
-        checkBtn1.tintColor = .red
+        if todoMember.todo1 == true {
+            checkBtn1.tintColor = .red
+        }
     }
     
     @objc func checkAction2(sender: UITapGestureRecognizer) {
-        checkBtn2.tintColor = .red
+        if todoMember.todo2 == true {
+            checkBtn2.tintColor = .red
+        }
     }
     
     @objc func checkAction3(sender: UITapGestureRecognizer) {
-        checkBtn3.tintColor = .red
+        if todoMember.todo3 == true {
+            checkBtn3.tintColor = .red
+        }
     }
 }
 

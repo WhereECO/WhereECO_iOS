@@ -31,26 +31,26 @@ struct UserInfo: Codable {
 }
 
 struct TokenInfo: Codable {
-    init(userId: String="", token: String="") {
-        self.userId = userId
-        self.token = token
+    init(grantType: String="", accessToken: String="") {
+        self.grantType = grantType
+        self.accessToken = accessToken
     }
     
-    var userId: String
-    var token: String
+    var grantType: String?
+    var accessToken: String?
 }
 
+
 struct TodoInfo: Codable {
-    init(userId: String = "", todo1: Bool = false, todo2: Bool = false, todo3: Bool = false) {
-        self.userId = userId
+    init(todo1: Bool = false, todo2: Bool = false, todo3: Bool = false) {
         self.todo1 = todo1
         self.todo2 = todo2
         self.todo3 = todo3
     }
-    var userId: String
-    var todo1: Bool
-    var todo2: Bool
-    var todo3: Bool
+
+    var todo1: Bool?
+    var todo2: Bool?
+    var todo3: Bool?
 }
 
 struct SignUpInfo: Codable {
@@ -103,3 +103,4 @@ struct addressInfo: Codable {
 }
 
 var addressData: [addressInfo] = []
+var tokenData: [TokenInfo] = []

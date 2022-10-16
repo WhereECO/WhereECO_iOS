@@ -225,7 +225,7 @@ class MapVC: UIViewController {
         guard let token = String(data: data, encoding: .utf8) else { return }
         
         //restApi.POST_Token -> 토큰 post하기
-        restApi.POST_Token(userId: account, token: token)
+//        restApi.POST_Token(userId: account, token: token)
         print(token)
     }
     
@@ -239,11 +239,16 @@ extension MapVC: UITableViewDelegate, CLLocationManagerDelegate {
         
         restApi.GET_Todo(closure: { [self] datas in
             todoMember = datas
-        })
-        
-        if todoMember.userId == loginMember.userId {
+            print(datas)
             print("keyChain에서 가져오기 성공!")
             
+            nextLinkView()
+        })
+    }
+    
+    func nextLinkView() {
+        DispatchQueue.main.async {
+            print("LinkView로 이동!")
             let vc = LinkVC()
             self.navigationController?.pushViewController(vc, animated: true)
         }

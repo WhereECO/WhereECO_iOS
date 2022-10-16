@@ -13,10 +13,11 @@ enum KeychainError: Error {
     case duplicatePasswordKeyValue
 }
 
-class ViewController: UIViewController {
+class MainVC: UIViewController {
     
     let restApi = RestAPI()
     var loginMember = UserInfo()    // login 관련 member
+    var tokenMember = TokenInfo()
     
     lazy var logoimage: UIImageView = {
         let logoimage = UIImageView()
@@ -101,7 +102,7 @@ class ViewController: UIViewController {
         // 키보드 내리기
         mainIdTextField.addTarget(self, action: #selector(didEndOnExit), for: UIControl.Event.editingDidEndOnExit)
         mainPwdTextField.addTarget(self, action: #selector(didEndOnExit), for: UIControl.Event.editingDidEndOnExit)
-        loginBtn.addTarget(self, action: #selector(loginCheck), for: .touchUpInside)
+//        loginBtn.addTarget(self, action: #selector(loginCheck), for: .touchUpInside)
         signUpBtn.addTarget(self, action: #selector(signUpBtnPressed), for: .touchUpInside)
         
         logoimage.translatesAutoresizingMaskIntoConstraints = false
@@ -140,13 +141,13 @@ class ViewController: UIViewController {
             loginBtn.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
-
+    
     //MARK: 키체인에 넣을 아이템 생성
     func addItemsOnKeyChain() throws {
-        //간단하게 네임이 younsu이고, 패스워드가 ask123인 유저의 패스워드를 keychain 형식으로 저장.
-        let credentials = UserInfo(userId: loginMember.userId, pwd: loginMember.pwd, token: loginMember.token)
-        let account = credentials.userId
-        let token = credentials.token.data(using: String.Encoding.utf8)!
+
+        let credentials = TokenInfo(grantType: tokenMember.grantType!, accessToken: tokenMember.accessToken!)
+        let account = credentials.grantType
+        let token = credentials.accessToken!.data(using: String.Encoding.utf8)!
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                                     kSecAttrAccount: account,
                                     kSecValueData: token]

@@ -14,7 +14,7 @@ class RestAPI {
     // 실시간 지도 정보 가져오기
     func GET_Address(closure: @escaping ([addressInfo]) -> Void) {
         
-        if let url = URL(string: "http://localhost:8088/addresses") {
+        if let url = URL(string: "https://www.whereeco.shop/addresses") {
             var request = URLRequest.init(url: url)
             
             request.httpMethod = "GET"
@@ -41,15 +41,18 @@ class RestAPI {
         else {return}
         
         // URL 객체 정의
-        let url = URL(string: "http://localhost:8088/users/join")
+        let url = URL(string: "https://www.whereeco.shop/users/join")
         
         // URLRequest 객체를 정의
         var request = URLRequest(url: url!)
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")  // the request is JSON
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")        // the expected response is also JSON
+        
         request.httpMethod = "POST"
-
+        
         // insert json data to the request
         request.httpBody = uploadData
-
+        
         // URLSession 객체를 통해 전송, 응답값 처리
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
@@ -69,7 +72,7 @@ class RestAPI {
     // 로그인 정보 받아오기
     func GET_SignUp(closure: @escaping (SignUpInfo) -> Void) {
         
-        if let url = URL(string: "http://localhost:8088/users/join") {
+        if let url = URL(string: "https://www.whereeco.shop/users/join") {
             var request = URLRequest.init(url: url)
             
             request.httpMethod = "GET"
@@ -88,107 +91,71 @@ class RestAPI {
     }
     
     // 로그인 정보 보내기
-    func POST_Login(userId: String, pwd: String) {
+    func POST_Login(userId: String, pwd: String, closure: @escaping (TokenInfo) -> Void) {
+        print("정보 보내기")
         let comment = UserInfo(userId: userId, pwd: pwd)
-        guard let uploadData = try? JSONEncoder().encode(comment)
-        else {return}
-        
-        // URL 객체 정의
-        let url = URL(string: "http://localhost:8088/users/login")
+        print(comment)
+        guard let uploadData = try? JSONEncoder().encode(comment) else {return}
+        let url = URL(string: "https://www.whereeco.shop/users/login")
         
         // URLRequest 객체를 정의
         var request = URLRequest(url: url!)
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")  // the request is JSON
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")        // the expected response is also JSON
         request.httpMethod = "POST"
-
+        
         // insert json data to the request
         request.httpBody = uploadData
-
+        
         // URLSession 객체를 통해 전송, 응답값 처리
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                // 서버가 응답이 없거나 통신이 실패
-                print(error?.localizedDescription ?? "No data")
-                return
-            }
-            // 응답 처리 로직
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
+        let task = URLSession.shared.dataTask(with: request) { [self] data, response, error in
+            if let json = data {
+                do {
+                    let tokenResponse = try JSONDecoder().decode(TokenInfo.self, from: json)
+                    print("토근 정보 받아오기")
+                    print(tokenResponse.grantType)
+                    closure(tokenResponse)
+                } catch {
+                    print("토근 정보 못받아옴!")
+                    print(error)
+                }
+            } else {
+                print("정보 못받아옴!")
+                if let error = error {
+                    print(error)
+                }
             }
         }
         task.resume()
     }
-    
-    // 로그인 정보 받아오기
-    func GET_Login(closure: @escaping (UserInfo) -> Void) {
-        
-        if let url = URL(string: "http://localhost:8088/users/login") {
-            var request = URLRequest.init(url: url)
-            
-            request.httpMethod = "GET"
-            
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { return }
-                // get
-                let decoder = JSONDecoder()
-                
-                // decoder
-                let json = try?decoder.decode(UserInfo.self, from: data)
-                closure(json!)
-                
-            }.resume()
-        }
-    }
-    
-    func POST_Token(userId: String, token: String) {
-    
-        let comment = TokenInfo(userId: userId, token: token)
-        guard let uploadData = try? JSONEncoder().encode(comment)
-        else {return}
-        
-        // URL 객체 정의
-        let url = URL(string: "http://localhost:8088/users/todo")
-        
-        // URLRequest 객체를 정의
-        var request = URLRequest(url: url!)
-        request.httpMethod = "POST"
 
-        // insert json data to the request
-        request.httpBody = uploadData
-
-        // URLSession 객체를 통해 전송, 응답값 처리
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                // 서버가 응답이 없거나 통신이 실패
-                print(error?.localizedDescription ?? "No data")
-                return
-            }
-            // 응답 처리 로직
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
-            }
-        }
-        task.resume()
-    }
-    
     func GET_Todo(closure: @escaping (TodoInfo) -> Void) {
         
         if let url = URL(string: "http://localhost:8088/users/todo") {
             var request = URLRequest.init(url: url)
-            
+            request.setValue("Bearer \(TokenInfo.self)", forHTTPHeaderField: "Authorization")
             request.httpMethod = "GET"
             
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { return }
-                // get
-                let decoder = JSONDecoder()
-                
-                // decoder
-                let json = try!decoder.decode(TodoInfo.self, from: data)
-                closure(json)
-                
-            }.resume()
+            // URLSession 객체를 통해 전송, 응답값 처리
+            let task = URLSession.shared.dataTask(with: request) { [self] data, response, error in
+                if let json = data {
+                    do {
+                        let tokenResponse = try JSONDecoder().decode(TodoInfo.self, from: json)
+                        print("토근 정보 받아오기")
+                        print(tokenResponse.todo1)
+                        closure(tokenResponse)
+                    } catch {
+                        print("토근 정보 못받아옴!")
+                        print(error)
+                    }
+                } else {
+                    print("정보 못받아옴!")
+                    if let error = error {
+                        print(error)
+                    }
+                }
+            }
+            task.resume()
         }
         
     }
