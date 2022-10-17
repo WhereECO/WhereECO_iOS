@@ -160,6 +160,8 @@ class MainVC: UIViewController {
             print("add failed")
             throw KeychainError.unexpectedPasswordStatus
         }
+        
+        print("dddddd", token)
     }
     
     //MARK: 같은 키값이면 업데이트하기

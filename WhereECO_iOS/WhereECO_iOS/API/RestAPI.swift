@@ -128,12 +128,13 @@ class RestAPI {
         }
         task.resume()
     }
-
-    func GET_Todo(closure: @escaping (TodoInfo) -> Void) {
+    
+    func GET_Todo(token: String, closure: @escaping (TodoInfo) -> Void) {
+        let mapvc = MainVC()
         
-        if let url = URL(string: "http://localhost:8088/users/todo") {
+        if let url = URL(string: "https://www.whereeco.shop/users/todo") {
             var request = URLRequest.init(url: url)
-            request.setValue("Bearer \(TokenInfo.self)", forHTTPHeaderField: "Authorization")
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             request.httpMethod = "GET"
             
             // URLSession 객체를 통해 전송, 응답값 처리
@@ -142,7 +143,7 @@ class RestAPI {
                     do {
                         let tokenResponse = try JSONDecoder().decode(TodoInfo.self, from: json)
                         print("토근 정보 받아오기")
-                        print(tokenResponse.todo1)
+                        print(tokenResponse)
                         closure(tokenResponse)
                     } catch {
                         print("토근 정보 못받아옴!")

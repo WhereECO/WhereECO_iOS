@@ -12,11 +12,13 @@ import YoutubePlayer_in_WKWebView
 class LinkVC: UIViewController {
     
     let restApi = RestAPI()
+    var tokenMember = TokenInfo()
     var todoMember = TodoInfo()    // todo 관련 member
     
     func loadData() {
-        restApi.GET_Todo(closure: { [self] datas in
+        restApi.GET_Todo(token: tokenMember.accessToken! ,closure: { [self] datas in
             todoMember = datas
+            print("출력 확인하기", todoMember)
         })
     }
     
@@ -274,17 +276,17 @@ class LinkVC: UIViewController {
         //        let video1 = Video()
         //        video1.Key = "NcSUweIWMTc"
         //        video1.Title = "입천장 까지도록 와그작이 알려주는 환경 지키는 7가지 꿀팁"
-        dataSource.append("NcSUweIWMTc")
+        dataSource.append(todoMember.url1!)
         
         //        let video2 = Video()
         //        video2.Key = "gh_qZ66JHtE"
         //        video2.Title = "환경 벤처 기업인 인터뷰 에코-업🎤포어시스(Foresys)🌊🏖"
-        dataSource.append("gh_qZ66JHtE")
+        dataSource.append(todoMember.url2!)
         
         //        let video3 = Video()
         //        video3.Key = "CeK2MsJz1aA"
         //        video3.Title = "[환경부X @삼프로TV_경제의신과함께 ] 방심하면 속을 수 있다? / 그린워싱의 모든 것/ 무려 3,000건이나? [녹색금융이 머니? EP.03]"
-        dataSource.append("CeK2MsJz1aA")
+        dataSource.append(todoMember.url3!)
     }
     
     private func setupDelegate() {

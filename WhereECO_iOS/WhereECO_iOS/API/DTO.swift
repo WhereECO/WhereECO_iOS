@@ -42,15 +42,21 @@ struct TokenInfo: Codable {
 
 
 struct TodoInfo: Codable {
-    init(todo1: Bool = false, todo2: Bool = false, todo3: Bool = false) {
+    init(todo1: Bool = false, todo2: Bool = false, todo3: Bool = false, url1: String="", url2: String="", url3: String="") {
         self.todo1 = todo1
         self.todo2 = todo2
         self.todo3 = todo3
+        self.url1 = url1
+        self.url2 = url2
+        self.url3 = url3
     }
 
     var todo1: Bool?
     var todo2: Bool?
     var todo3: Bool?
+    var url1: String?
+    var url2: String?
+    var url3: String?
 }
 
 struct SignUpInfo: Codable {
