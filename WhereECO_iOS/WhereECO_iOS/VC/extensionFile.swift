@@ -184,19 +184,20 @@ extension LinkVC: UITableViewDelegate {
     }
     
     @objc func checkAction1(sender: UITapGestureRecognizer) {
-        if todoMember.todo1 == true {
+        if Bool(todoMember.todo1!) == true {
+            print(Bool(todoMember.todo1!))
             checkBtn1.tintColor = .red
         }
     }
     
     @objc func checkAction2(sender: UITapGestureRecognizer) {
-        if todoMember.todo2 == true {
+        if Bool(todoMember.todo2!) == true {
             checkBtn2.tintColor = .red
         }
     }
     
     @objc func checkAction3(sender: UITapGestureRecognizer) {
-        if todoMember.todo3 == true {
+        if Bool(todoMember.todo3!) == true {
             checkBtn3.tintColor = .red
         }
     }

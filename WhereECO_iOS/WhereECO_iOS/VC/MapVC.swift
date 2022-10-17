@@ -210,9 +210,9 @@ class MapVC: UIViewController {
     }
     
     //MARK: 해당 계정으로 패스워드를 키체인에서 가져오기
-    func readItemsOnKeyChain() {
+    func readItemsOnKeyChain(){
         print("읽기시작")
-        let account = tokenMember.grantType
+        let account = "Bearer"
         print("qqqqqqq", account)
         let query: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
                                 kSecAttrAccount: account,
@@ -227,8 +227,13 @@ class MapVC: UIViewController {
         guard let data = existingItem["v_Data"] as? Data else { return }
         guard let token = String(data: data, encoding: .utf8) else { return }
         
-        print("zzzzzzz", token)
-        
+        restApi.GET_Todo(token: token, closure: { [self] datas in
+            todoMember = datas
+            print(datas)
+            print("keyChain에서 가져오기 성공!")
+            print(todoMember)
+            nextLinkView()
+        })
     }
     
 }
@@ -239,13 +244,6 @@ extension MapVC: UITableViewDelegate, CLLocationManagerDelegate {
         
         readItemsOnKeyChain()       // POST Token
         
-        restApi.GET_Todo(token: tokenMember.accessToken!, closure: { [self] datas in
-            todoMember = datas
-            print(datas)
-            print("keyChain에서 가져오기 성공!")
-            print(todoMember)
-            nextLinkView()
-        })
     }
     
     func nextLinkView() {

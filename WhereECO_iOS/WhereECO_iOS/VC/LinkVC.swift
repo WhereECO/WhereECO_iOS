@@ -15,13 +15,6 @@ class LinkVC: UIViewController {
     var tokenMember = TokenInfo()
     var todoMember = TodoInfo()    // todo 관련 member
     
-    func loadData() {
-        restApi.GET_Todo(token: tokenMember.accessToken! ,closure: { [self] datas in
-            todoMember = datas
-            print("출력 확인하기", todoMember)
-        })
-    }
-    
     var titleView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainYellow
@@ -165,15 +158,11 @@ class LinkVC: UIViewController {
         self.view.addSubview(checkBtn3)
         self.view.addSubview(plusUrlLabel)
         self.view.addSubview(collectionView)
-        //        self.view.addSubview(youtubeView)
-        
-        //        youtubeViewDidBecomeReady(youtubeView)
         
         setupDataSource()
         setupDelegate()
         registerCell()
         configure()
-        loadData()
         
         titleView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -256,38 +245,15 @@ class LinkVC: UIViewController {
             plusUrlLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
             
         ])
-        //        youtubeView.translatesAutoresizingMaskIntoConstraints = false
-        //        NSLayoutConstraint.activate([
-        //            youtubeView.topAnchor.constraint(equalTo: self.plusUrlLabel.bottomAnchor, constant: 30),
-        //            youtubeView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-        //            youtubeView.widthAnchor.constraint(equalToConstant: 350),
-        //            youtubeView.heightAnchor.constraint(equalToConstant: 200)
-        //        ])
         
     }
-    
-    //    func youtubeViewDidBecomeReady(_ youtubeView: WKYTPlayerView){
-    //        youtubeView.load(withVideoId: "NcSUweIWMTc", playerVars: playVarsDic)
-    //    }
     
     private func setupDataSource() {
-        
-        //        playerView.load(withVideoId: "NcSUweIWMTc")
-        //        let video1 = Video()
-        //        video1.Key = "NcSUweIWMTc"
-        //        video1.Title = "입천장 까지도록 와그작이 알려주는 환경 지키는 7가지 꿀팁"
         dataSource.append(todoMember.url1!)
-        
-        //        let video2 = Video()
-        //        video2.Key = "gh_qZ66JHtE"
-        //        video2.Title = "환경 벤처 기업인 인터뷰 에코-업🎤포어시스(Foresys)🌊🏖"
         dataSource.append(todoMember.url2!)
-        
-        //        let video3 = Video()
-        //        video3.Key = "CeK2MsJz1aA"
-        //        video3.Title = "[환경부X @삼프로TV_경제의신과함께 ] 방심하면 속을 수 있다? / 그린워싱의 모든 것/ 무려 3,000건이나? [녹색금융이 머니? EP.03]"
         dataSource.append(todoMember.url3!)
     }
+    
     
     private func setupDelegate() {
         collectionView.delegate = self
