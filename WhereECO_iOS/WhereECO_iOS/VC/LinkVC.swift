@@ -15,6 +15,7 @@ class LinkVC: UIViewController {
     var tokenMember = TokenInfo()
     var todoMember = TodoInfo()    // todo 관련 member
     
+    
     var titleView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainYellow
@@ -249,9 +250,9 @@ class LinkVC: UIViewController {
     }
     
     private func setupDataSource() {
-        dataSource.append(todoMember.url1!)
-        dataSource.append(todoMember.url2!)
-        dataSource.append(todoMember.url3!)
+        dataSource.append("0JiF52gYbrw")
+        dataSource.append("3hJ_p3xnpbw")
+        dataSource.append("6r6xHflS7HA")
     }
     
     
@@ -266,7 +267,6 @@ class LinkVC: UIViewController {
     
     private func configure() {
         collectionView.snp.makeConstraints { make in
-            //            make.center.leading.trailing.equalToSuperview()
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(500)
             make.height.equalTo(300)

@@ -111,11 +111,9 @@ class SignUpVC: UIViewController {
     // 비밀번호 입력창
     lazy var pwdTextField: UITextField! = {
         let pwdText = UITextField()
-        //        pwText.frame = CGRect(x: 65, y: 60, width: 200, height: 30)
         pwdText.placeholder = "비밀번호"
         pwdText.layer.cornerRadius = 5
-        //        pwdText.layer.borderWidth = 1
-        //        pwdText.layer.borderColor = UIColor.darkGreen?.cgColor
+        pwdText.isSecureTextEntry = true
         pwdText.borderStyle = .roundedRect
         pwdText.clearButtonMode = .whileEditing   // 입력하기 위해서 clear한 btn상태
         return pwdText
@@ -124,11 +122,9 @@ class SignUpVC: UIViewController {
     // 비밀번호 확인 입력창
     lazy var checkPwdTextField: UITextField! = {
         let checkpwdText = UITextField()
-        //        checkpwText.frame = CGRect(x: 65, y: 60, width: 200, height: 30)
         checkpwdText.placeholder = "비밀번호 확인"
         checkpwdText.layer.cornerRadius = 5
-        //        checkpwdText.layer.borderWidth = 1
-        //        checkpwdText.layer.borderColor = UIColor.darkGreen?.cgColor
+        checkpwdText.isSecureTextEntry = true
         checkpwdText.borderStyle = .roundedRect
         checkpwdText.clearButtonMode = .whileEditing   // 입력하기 위해서 clear한 btn상태
         return checkpwdText

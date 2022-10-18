@@ -187,18 +187,24 @@ extension LinkVC: UITableViewDelegate {
         if Bool(todoMember.todo1!) == true {
             print(Bool(todoMember.todo1!))
             checkBtn1.tintColor = .red
+        } else {
+            checkBtn1.tintColor = .black
         }
     }
     
     @objc func checkAction2(sender: UITapGestureRecognizer) {
         if Bool(todoMember.todo2!) == true {
             checkBtn2.tintColor = .red
+        } else {
+            checkBtn2.tintColor = .black
         }
     }
     
     @objc func checkAction3(sender: UITapGestureRecognizer) {
         if Bool(todoMember.todo3!) == true {
             checkBtn3.tintColor = .red
+        } else {
+            checkBtn3.tintColor = .black
         }
     }
 }

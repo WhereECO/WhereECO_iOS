@@ -229,7 +229,6 @@ class MapVC: UIViewController {
         
         restApi.GET_Todo(token: token, closure: { [self] datas in
             todoMember = datas
-            print(datas)
             print("keyChain에서 가져오기 성공!")
             print(todoMember)
             nextLinkView()
@@ -241,9 +240,7 @@ class MapVC: UIViewController {
 // MARK: - extension MapViewController
 extension MapVC: UITableViewDelegate, CLLocationManagerDelegate {
     @objc func linkPageBtnPressed() {
-        
         readItemsOnKeyChain()       // POST Token
-        
     }
     
     func nextLinkView() {
