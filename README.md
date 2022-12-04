@@ -10,7 +10,6 @@
 - iOS 16.0
 
 ## 파일/폴더 안내
-Air-Alarm-IOS/Air-Alarm
 - /RestAPI : Rest API 소스
 - /DTO : 데이터 객체 모음
 - /Model : youtube cell 설정
